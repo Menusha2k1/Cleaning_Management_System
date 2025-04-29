@@ -1,8 +1,10 @@
 import React from 'react'
 import { WiStars } from "react-icons/wi";
+import { useNavigate } from 'react-router-dom';
 
 
 const navBar = () => {
+    const navigate = useNavigate();
     return (
         <div className='bg-white flex items-center justify-between px-3 py-4 drop-shadow fixed top-0 right-0 left-0 z-1 pl-20 pr-20'>
             <div className='text-4xl font-medium text-green-800 py-2 drop-shadow flex'>
@@ -16,7 +18,7 @@ const navBar = () => {
                     <li className='hover:text-green-700 hover:border-b-2'>My Bookings</li>
                 </ul>
             </div>
-            <button className='bg-green-700 rounded-2xl text-white px-5 py-2 te'>Login</button>
+            <button onClick={() => navigate('/login')} className='bg-green-700 rounded-2xl text-white px-5 py-2 te'>Login</button>
         </div>
 
     )
