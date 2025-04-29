@@ -12,9 +12,11 @@ mongoose.connect(config.connectionString);
 
 const authRoutes = require('./Routes/authRoutes');
 const bookingRoutes = require('./Routes/bookingRoutes');
+const serviceRoutes = require('./Routes/serviceRoute')
 
 app.use("/", authRoutes);
 app.use('/api/booking', bookingRoutes);
+app.use('/api/service', serviceRoutes);
 
 app.listen(8000);
 
