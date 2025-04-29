@@ -11,8 +11,10 @@ app.use(cors());
 mongoose.connect(config.connectionString);
 
 const authRoutes = require('./Routes/authRoutes');
+const bookingRoutes = require('./Routes/bookingRoutes');
 
 app.use("/", authRoutes);
+app.use('/api/booking', bookingRoutes);
 
 app.listen(8000);
 

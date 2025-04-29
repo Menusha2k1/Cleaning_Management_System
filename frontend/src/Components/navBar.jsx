@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 const navBar = () => {
     const navigate = useNavigate();
+
+    const isAuthenticated = !!localStorage.getItem('token');
+
     return (
         <div className='bg-white flex items-center justify-between px-3 py-4 drop-shadow fixed top-0 right-0 left-0 z-1 pl-20 pr-20'>
             <div className='text-4xl font-medium text-green-800 py-2 drop-shadow flex'>
@@ -15,10 +18,22 @@ const navBar = () => {
                 <ul className='flex space-x-8 text-xl'>
                     <li className='hover:text-green-700 hover:border-b-2'>Home</li>
                     <li className='hover:text-green-700 hover:border-b-2'>Services</li>
-                    <li className='hover:text-green-700 hover:border-b-2'>My Bookings</li>
+                    {isAuthenticated && (<li className='hover:text-green-700 hover:border-b-2'>My Bookings</li>)}
+
                 </ul>
             </div>
-            <button onClick={() => navigate('/login')} className='bg-green-700 rounded-2xl text-white px-5 py-2 te'>Login</button>
+            {!isAuthenticated?
+                <button
+                onClick={() => navigate('/login')}
+                className='bg-green-700 rounded-2xl text-white px-5 py-2 te'>
+                Login
+            </button>
+            :
+            <button
+                onClick={() => {localStorage.removeItem('token');navigate('/login')}}
+                className='bg-green-700 rounded-2xl text-white px-5 py-2 te'>
+                Logout
+            </button>}
         </div>
 
     )
