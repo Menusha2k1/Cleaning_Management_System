@@ -14,12 +14,12 @@ function App() {
   return (
 
     <div>
-      
+
       <Router>
         <NavBar />
         <Routes>
           <Route path="/register" exact element={<Register />} />
-          <Route path="/login" exact element={<Login />} />
+          <Route path="/" exact element={<Login />} />
           <Route path="/mybookings" exact element={<Bookings />} />
           <Route path="/add" exact element={<AddBooking />} />
           <Route path="/edit/:id" exact element={<EditBooking />} />

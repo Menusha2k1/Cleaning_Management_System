@@ -1,10 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-
-
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { MdOutlineError } from "react-icons/md";
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -49,7 +47,7 @@ const Login = () => {
             if (error.response && error.response.data && error.response.data.message) {
                 setError(error.response.data.message);
             } else {
-                setError("dslijfhmuodius1111111111111111111111")
+                setError("error")
             }
         }
 
@@ -60,12 +58,12 @@ const Login = () => {
 
             <div className="w-100 rounded-3xl bg-white p-10 z-1" >
                 <form onSubmit={handleLogin}>
-                    <h4 className="text-4xl mb-8 py-5 ">Login</h4>
+                    <h4 className="text-4xl mb-4 font-semibold py-5 ">Login</h4>
 
                     <input
                         type="text"
                         placeholder="Username"
-                        className="py-3 text-2xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
+                        className="py-3 w-full text-xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
 
@@ -73,18 +71,22 @@ const Login = () => {
                     <input
                         type="password"
                         placeholder="Password"
-                        className="py-3 text-2xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
+                        className="py-3  w-full text-xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
 
                     />
 
 
-                    {error && <p className='text-red-500 text-xs pb-1'>{error}</p>}
-                    <button type='submit' className='bg-green-700 text-white p-3 text-2xl w-full rounded-2xl'>Login</button>
+                    {error && <p className='text-red-500 text-xl font-semibold pb-1 flex'>
+                        <MdOutlineError
+                            className='mt-1 mr-1'
+                        />{error}
+                    </p>}
+                    <button type='submit' className='bg-green-700 text-white p-3 text-xl w-full rounded-2xl'>Login</button>
 
                     <p className='text-sm text-center mt-4'>Not registered yet?{''}
-                        <Link to="/register" className='font-medium text-blue text-primary underline text-blue-600'> Create an Account </Link>
+                        <Link to="/register" className='font-medium text-blue text-primary underline text-green-600'> Register </Link>
 
                     </p>
                 </form>

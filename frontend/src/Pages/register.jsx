@@ -28,28 +28,27 @@ const register = () => {
         setError("");
         if (password != compassword) {
             setError("Password Not Match")
-        }else{
-        try {
-            const response = await axios.post("http://localhost:8000/register", {
-                username: username,
-                password: password,
-            });
-            if (response.data && response.data.accessToken) {
-                localStorage.setItem('token', response.data.accessToken);
-                toast.success("Login successful!");
-                navigate('/');
+        } else {
+            try {
+                const response = await axios.post("http://localhost:8000/register", {
+                    username: username,
+                    password: password,
+                });
+                if (response.data && response.data.accessToken) {
+                    localStorage.setItem('token', response.data.accessToken);
+                    navigate('/');
 
 
 
-            }
-        } catch (error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                setError(error.response.data.message);
-            } else {
-                setError("")
+                }
+            } catch (error) {
+                if (error.response && error.response.data && error.response.data.message) {
+                    setError(error.response.data.message);
+                } else {
+                    setError("")
+                }
             }
         }
-    }
 
     };
 
@@ -58,12 +57,12 @@ const register = () => {
 
             <div className="w-100 rounded-3xl bg-white p-10 z-1" >
                 <form onSubmit={handleLogin}>
-                    <h4 className="text-5xl mb-8 py-5 ">Register</h4>
+                    <h4 className="text-4xl mb-4 py-5 font-semibold ">Register</h4>
 
                     <input
                         type="text"
                         placeholder="Username"
-                        className="py-3 text-2xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
+                        className="py-3 w-full text-xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
 
@@ -71,7 +70,7 @@ const register = () => {
                     <input
                         type="password"
                         placeholder="Confirm Password"
-                        className="py-3 text-2xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
+                        className="py-3 w-full text-xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
 
@@ -80,7 +79,7 @@ const register = () => {
                     <input
                         type="password"
                         placeholder="Password"
-                        className="py-3 text-2xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
+                        className="py-3 w-full text-xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
                         value={compassword}
                         onChange={(e) => setComPassword(e.target.value)}
 
@@ -88,11 +87,11 @@ const register = () => {
 
 
 
-                    {error && <p className='text-red-500 text-xs pb-1'>{error}</p>}
-                    <button type='submit' className='bg-green-700 text-white p-3 text-2xl w-full rounded-2xl'>Login</button>
+                    {error && <p className='text-red-500 text-xl font-semibold pb-1'>{error}</p>}
+                    <button type='submit' className='bg-green-700 text-white p-3 text-xl w-full rounded-2xl'>Register</button>
 
-                    <p className='text-sm text-center mt-4'>Not registered yet?{''}
-                        <Link to="/register" className='font-medium text-blue text-primary underline text-blue-600'> Create an Account </Link>
+                    <p className='text-sm text-center mt-4'>Have an account?{''}
+                        <Link to="/" className='font-medium text-blue text-primary underline text-green-600'> Login </Link>
 
                     </p>
                 </form>

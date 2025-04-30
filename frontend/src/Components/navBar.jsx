@@ -18,7 +18,7 @@ const navBar = () => {
     const Logout = () => {
         localStorage.removeItem('token');
         setClicked(false); 
-        navigate('/login');
+        navigate('/');
     }
 
 
@@ -42,7 +42,7 @@ const navBar = () => {
             </div>
             {!isAuthenticated ?
                 <button
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate('/')}
                     className='bg-green-700 rounded-2xl text-white px-5 py-2 hover:opacity-44'>
                     Login
                 </button>
