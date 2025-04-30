@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import pic1 from '../assets/Pic1.jpg'
 
 const BookingForm = () => {
     const [customerName, setCustomerName] = useState('');

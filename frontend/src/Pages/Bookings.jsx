@@ -74,11 +74,11 @@ const Bookings = () => {
             </div>
             {bookings.length === 0 ? <div className="text-center mt-60">No bookings found</div> :
 
-                <div className="grid gap-4  lg:grid-cols-4">
+                <div className="grid gap-4  lg:grid-cols-4 ">
 
 
                     {bookings.map((booking) => (
-                        <div key={booking._id} className="relative rounded-lg p-6 shadow-2xl hover:shadow-lg dropshadow-2xl">
+                        <div key={booking._id} className="bg-green-200 relative rounded-lg p-6 shadow-2xl hover:shadow-lg dropshadow-2xl">
 
 
                             <p className="text-balck text-3xl mb-1 font-semibold">
@@ -102,9 +102,11 @@ const Bookings = () => {
 
                             <div className='flex space-x-2 mt-5'>
                                 <MdEditSquare
+                                className='text-green-700'
                                     size={30}
                                     onClick={() => navigate(`/edit/${booking._id}`)} />
                                 <MdDelete
+                                className='text-red-800'
                                     size={30}
                                     onClick={() => handleDelete(booking._id)} />
 
