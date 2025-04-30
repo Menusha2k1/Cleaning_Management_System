@@ -33,7 +33,13 @@ const Login = () => {
                 password: password,
             });
             if (response.data && response.data.accessToken) {
-                localStorage.setItem('token', response.data.accessToken);
+                const { accessToken, user } = response.data;
+
+                // Save user details in localStorage
+                localStorage.setItem('token', accessToken);
+                localStorage.setItem('username', user.username);
+                localStorage.setItem('id', user.id);
+
                 navigate('/');
 
 

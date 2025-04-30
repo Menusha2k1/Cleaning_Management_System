@@ -17,7 +17,7 @@ exports.login = async(req, res) => {
 
     // Compare passwords
     const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
+   if (!isMatch) {
         return res.status(401).json({ 
             error: true, 
             message: "Invalid credentials" 
@@ -34,7 +34,6 @@ exports.login = async(req, res) => {
         process.env.ACCESS_TOKEN_SECRET, 
         { expiresIn: '1h' }
     );
-
     // Send response
     return res.json({ 
         error: false, 
@@ -43,8 +42,9 @@ exports.login = async(req, res) => {
             id: user._id,
             username: user.username
         }, 
-        accessToken 
+        accessToken
     });
+   
 }
 exports.register = async (req, res) => {
     const { username, password } = req.body;
