@@ -1,90 +1,107 @@
-import React from 'react'
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
+const AdminDashboard = () => {
+    const [bookings, setBookings] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-const adminDashboard = () => {
-        const [bookings, setBookings] = useState([]);
+    useEffect(() => {
+        fetchBookings();
+    }, []);
 
-        useEffect(() => {      
-    
-            axios.get(`http://localhost:8000/api/booking/all`)
-                .then(response => {
-                    // Make sure we're using the bookings array from the response
-                    setBookings(response.data.bookings);
-                })
-                .catch(error => {
-                    console.error('Error fetching bookings:', error);
-                    setError('Failed to load bookings');
-                })
-                .finally(() => {
-                    setLoading(false);
-                });
-        }, [userId]);
+    const fetchBookings = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8000/api/booking/all`);
+            setBookings(response.data.bookings);
+        } catch (error) {
+            console.error('Error fetching bookings:', error);
+            setError('Failed to load bookings');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    
-  return (
-<div className="mt-8 p-4 px-40">
+    const updateBookingStatus = async (id, newStatus) => {
+        try {
+            const ChangeStatus = window.confirm("Are you sure you want to change the Status ?");
+            if(ChangeStatus){ 
+                const token = localStorage.getItem('token');
+            await axios.put(`http://localhost:8000/api/booking/${id}/status`, 
+                { status: newStatus },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            fetchBookings();}
+            // refresh bookings after update
+        } catch (error) {
+            console.error(`Failed to update booking ${id} status:`, error);
+        }
+    };
+
+    return (
+        <div className="mt-8 p-4 px-40">
             <div className="text-center mt-20 text-4xl mb-8 font-bold">
-                <h1>My Bookings</h1>
+                <h1>Bookings</h1>
             </div>
 
-            <div>
-                <Link to={'/add'}>
-                    <button className='absolute bg-green-700 p-6 text-white rounded-full right-20 bottom-20 drop-shadow-2xl hover:p-7'>
-                        <FaPlus
-                            size={30} />
-
-                    </button>
-                </Link>
-            </div>
-            {bookings.length === 0 ? <div className="text-center mt-60">No bookings found</div> :
-
-                <div className="grid gap-4  lg:grid-cols-4 ">
-
-
+            {bookings.length === 0 ? (
+                <div className="text-center mt-60">No bookings found</div>
+            ) : (
+                <div className="grid gap-4 lg:grid-cols-2">
                     {bookings.map((booking) => (
-                        <div key={booking._id} className="bg-green-200 relative rounded-lg p-6 shadow-2xl hover:shadow-lg dropshadow-2xl">
-
-
-                            <p className="text-balck text-3xl mb-1 font-semibold">
-                                {booking.service_id?.name || 'No service specified'}
-
-                            </p>
-                            <p className="text-gray-600 mb-1">
-                                <span className="font-semibold">Date:</span>
-                                {new Date(booking.date_time).toLocaleDateString()}
-                            </p>
-                            <p className="text-gray-600 mb-1">
-                                <span className="font-semibold">Time:</span>
-                                {new Date(booking.date_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </p>
-                            <p className={`mt-2 font-medium ${booking.status === 'confirmed' ? 'text-green-600' :
+                        <div key={booking._id} className="bg-green-200 relative rounded-lg p-6 shadow-2xl">
+                            <label htmlFor="customer name">Customer:</label>
+                            <p className="text-3xl font-semibold">{booking.customer_name}</p>
+                            <hr />
+                            <label htmlFor="customer name">Address:</label>
+                            <p className="text-3xl font-semibold">Address: {booking.address}</p>
+                            <hr />
+                            <label htmlFor="customer name">Service:</label>
+                            <p className="text-3xl font-semibold">Service: {booking.service_id?.name || 'No service'}</p>
+                            <hr />
+                            <p className="text-3xl font-semibold mt-6">Date: {new Date(booking.date_time).toLocaleDateString()}</p>
+                            <p className="text-3xl font-semibold">Time: {new Date(booking.date_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                            <p className={`mt-2 text-xl font-medium ${
+                                booking.status === 'confirmed' ? 'text-green-600' :
                                 booking.status === 'pending' ? 'text-yellow-600' :
-                                    'text-gray-600'
-                                }`}>
+                                booking.status === 'completed' ? 'text-blue-600' :
+                                booking.status === 'cancelled' ? 'text-red-600' :
+                                'text-gray-600'
+                            }`}>
                                 Status: {booking.status}
                             </p>
 
-                            <div className='flex space-x-2 mt-5'>
-                                <MdEditSquare
-                                className='text-green-700'
-                                    size={30}
-                                    onClick={() => navigate(`/edit/${booking._id}`)} />
-                                <MdDelete
-                                className='text-red-800'
-                                    size={30}
-                                    onClick={() => handleDelete(booking._id)} />
-
+                            <div className="flex space-x-4 mt-5">
+                                <button
+                                    className='p-3 bg-yellow-700 rounded text-white'
+                                    onClick={() => updateBookingStatus(booking._id, 'confirmed')}
+                                >
+                                    Confirm
+                                </button>
+                                <button
+                                    className='p-3 bg-green-700 rounded text-white'
+                                    onClick={() => updateBookingStatus(booking._id, 'completed')}
+                                >
+                                    Mark as Completed
+                                </button>
+                                <button
+                                    className='p-3 bg-red-700 rounded text-white'
+                                    onClick={() => updateBookingStatus(booking._id, 'cancelled')}
+                                >
+                                    Cancel
+                                </button>
                             </div>
-
-
                         </div>
-
                     ))}
-                </div>}
-
+                </div>
+            )}
         </div>
-  )
-}
+    );
+};
 
-export default adminDashboard
+export default AdminDashboard;
