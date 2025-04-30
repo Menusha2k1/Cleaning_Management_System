@@ -1,64 +1,29 @@
-import axios from 'axios';
+import React from 'react'
 import React, { useEffect, useState } from 'react';
-import { MdEditSquare } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
-import { FaPlus } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
 
 
+const adminDashboard = () => {
+        const [bookings, setBookings] = useState([]);
 
-
-const Bookings = () => {
-    const userId = localStorage.getItem('id');
-    const [bookings, setBookings] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    const navigate = useNavigate();
-
-
-    useEffect(() => {
-        if (!userId) {
-            setError('User not authenticated');
-            setLoading(false);
-            return;
-        }
-
-        axios.get(`http://localhost:8000/api/booking/booking/${userId}`)
-            .then(response => {
-                // Make sure we're using the bookings array from the response
-                setBookings(response.data.bookings);
-            })
-            .catch(error => {
-                console.error('Error fetching bookings:', error);
-                setError('Failed to load bookings');
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [userId]);
-
-    const handleDelete = (id) => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this Booking?");
-        if (confirmDelete) {
-            axios.delete(`http://localhost:8000/api/booking/booking/${id}`)
-                .then(res => {
-                    console.log(res);
-
-
-                    navigate('/mybookings')
+        useEffect(() => {      
+    
+            axios.get(`http://localhost:8000/api/booking/all`)
+                .then(response => {
+                    // Make sure we're using the bookings array from the response
+                    setBookings(response.data.bookings);
                 })
-                .catch(err => console.error(err));
-        }
-    };
+                .catch(error => {
+                    console.error('Error fetching bookings:', error);
+                    setError('Failed to load bookings');
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }, [userId]);
 
-    if (loading) return <div className="text-center mt-30">Loading bookings...</div>;
-    if (error) return <div className="text-center mt-30 text-red-500">{error}</div>;
-
-
-
-    return (
-        <div className="mt-8 p-4 px-40">
+    
+  return (
+<div className="mt-8 p-4 px-40">
             <div className="text-center mt-20 text-4xl mb-8 font-bold">
                 <h1>My Bookings</h1>
             </div>
@@ -119,7 +84,7 @@ const Bookings = () => {
                 </div>}
 
         </div>
-    );
-};
+  )
+}
 
-export default Bookings;
+export default adminDashboard

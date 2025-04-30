@@ -40,7 +40,7 @@ const Login = () => {
                 localStorage.setItem('username', user.username);
                 localStorage.setItem('id', user.id);
 
-                navigate('/');
+                navigate('/mybookings');
 
 
 
@@ -84,8 +84,8 @@ const Login = () => {
                     <button type='submit' className='bg-green-700 text-white p-3 text-2xl w-full rounded-2xl'>Login</button>
 
                     <p className='text-sm text-center mt-4'>Not registered yet?{''}
-                    <Link to="/register" className='font-medium text-blue text-primary underline text-blue-600'> Create an Account </Link>
-                                
+                        <Link to="/register" className='font-medium text-blue text-primary underline text-blue-600'> Create an Account </Link>
+
                     </p>
                 </form>
             </div>
