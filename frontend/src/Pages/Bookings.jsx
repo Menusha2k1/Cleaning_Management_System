@@ -23,19 +23,24 @@ const Bookings = () => {
             setLoading(false);
             return;
         }
-
-        axios.get(`http://localhost:8000/api/booking/booking/${userId}`)
+        const fetchBookings = async () =>{
+            axios.get(`http://localhost:8000/api/booking/booking/${userId}`)
             .then(response => {
                 // Make sure we're using the bookings array from the response
                 setBookings(response.data.bookings);
             })
-            .catch(error => {
+             .catch(error => {
                 console.error('Error fetching bookings:', error);
                 setError('Failed to load bookings');
             })
             .finally(() => {
                 setLoading(false);
-            });
+                
+            });  
+        };
+
+        fetchBookings();
+           
     }, [userId]);
 
     const handleDelete = (id) => {
@@ -43,10 +48,7 @@ const Bookings = () => {
         if (confirmDelete) {
             axios.delete(`http://localhost:8000/api/booking/booking/${id}`)
                 .then(res => {
-                    console.log(res);
-
-
-                    navigate('/mybookings')
+                    console.log(res);                   
                 })
                 .catch(err => console.error(err));
         }
