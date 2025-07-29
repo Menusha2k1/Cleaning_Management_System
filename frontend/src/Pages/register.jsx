@@ -69,7 +69,7 @@ const register = () => {
                     />
                     <input
                         type="password"
-                        placeholder="Confirm Password"
+                        placeholder=" Password"
                         className="py-3 w-full text-xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -78,7 +78,7 @@ const register = () => {
 
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder="Confirm Password"
                         className="py-3 w-full text-xl p-3 border-1 rounded-2xl border-gray-400 mb-5"
                         value={compassword}
                         onChange={(e) => setComPassword(e.target.value)}
