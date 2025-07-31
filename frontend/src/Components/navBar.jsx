@@ -23,15 +23,15 @@ const navBar = () => {
 
 
     return (
-        <div className='bg-white flex items-center justify-between px-3 py-4 drop-shadow fixed top-0 right-0 left-0 z-1 pl-20 pr-20'>
-            <div className='text-4xl font-medium text-green-800 py-2 drop-shadow flex'>
+        <div className='bg-green-500 flex items-center justify-between px-3 py-4  fixed top-0 right-0 left-0 z-1 pl-20 pr-20'>
+            <div className='text-3xl font-medium text-white py-2 drop-shadow flex'>
                 <h1>Cleanify</h1><WiStars />
 
             </div>
-            <div className='md:flex items-center space-x-8 '>
-                <ul className='flex space-x-8 text-xl'>
-                    <li className='hover:text-green-700 hover:border-b-2'>Home</li>
-                    <li className='hover:text-green-700 hover:border-b-2'>Services</li>
+            <div className='md:flex items-center space-x-8 text-white drop-shadow-2xl '>
+                <ul className='flex space-x-8 text-l'>
+                    <li className='hover:text-green-700 hover:border-b-2' onClick={()=> navigate('/home')}>Home</li>
+                    <li className='hover:text-green-700 hover:border-b-2 '>Services</li>
                     {isAuthenticated && (
                         <Link to="/mybookings">
                             <li className='hover:text-green-700 hover:border-b-2'>My Bookings</li>
@@ -50,10 +50,10 @@ const navBar = () => {
                 :
 
                 <div className='flex'>
-                    <p className='p-2 '>Welcome, {username}!</p>
+                    <p className='p-2 text-white'>Welcome, {username}!</p>
                     <FaUserCircle
                         size={40}
-                        className='cursor-pointer'
+                        className='cursor-pointer text-white'
                         onClick={toggleLogout}
                     />
 

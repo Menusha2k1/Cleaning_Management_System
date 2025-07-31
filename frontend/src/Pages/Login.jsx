@@ -38,7 +38,7 @@ const Login = () => {
                 localStorage.setItem('username', user.username);
                 localStorage.setItem('id', user.id);
 
-                navigate('/mybookings');
+                navigate('/home');
 
 
 

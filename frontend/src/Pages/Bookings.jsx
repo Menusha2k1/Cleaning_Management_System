@@ -16,14 +16,7 @@ const Bookings = () => {
 
     const navigate = useNavigate();
 
-
-    useEffect(() => {
-        if (!userId) {
-            setError('User not authenticated');
-            setLoading(false);
-            return;
-        }
-        const fetchBookings = async () =>{
+         const fetchBookings = async () =>{
             axios.get(`http://localhost:8000/api/booking/booking/${userId}`)
             .then(response => {
                 // Make sure we're using the bookings array from the response
@@ -39,16 +32,27 @@ const Bookings = () => {
             });  
         };
 
+
+    useEffect(() => {
+        if (!userId) {
+            setError('User not authenticated');
+            setLoading(false);
+            return;
+        }
+   
+
         fetchBookings();
            
     }, [userId]);
-
+    
+ 
     const handleDelete = (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this Booking?");
         if (confirmDelete) {
             axios.delete(`http://localhost:8000/api/booking/booking/${id}`)
                 .then(res => {
-                    console.log(res);                   
+                    console.log(res);   
+                    fetchBookings();                
                 })
                 .catch(err => console.error(err));
         }

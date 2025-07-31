@@ -10,3 +10,13 @@
       overflow-x: hidden;
     }
   }
+  @layer utilities {
+  .triangle {
+      display: block;
+      width: 126px;
+      height: 180px;
+      background-color: red;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+
+  }
+}

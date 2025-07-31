@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const BookingForm = () => {
     const [customerName, setCustomerName] = useState('');
@@ -8,7 +9,7 @@ const BookingForm = () => {
     const [services, setServices] = useState([]);
     const [selectedService, setSelectedService] = useState('');
     const [message, setMessage] = useState('');
-
+    const navigate = useNavigate('');
     const userId = localStorage.getItem('id');
 
     // Fetch available services
@@ -43,6 +44,7 @@ const BookingForm = () => {
                 }
             });
             setMessage('Booking successful!');
+            navigate('/mybookings');
         } catch (error) {
             console.error('Booking failed:', error);
             const errMsg = error.response?.data?.message || 'Booking failed. Please try again.';
@@ -100,6 +102,7 @@ const BookingForm = () => {
                 <button
                     type="submit"
                     className="w-full bg-green-700 text-white p-3 rounded-2xl hover:bg-green-700"
+                    
                 >
                     Submit Booking
                 </button>

@@ -6,6 +6,7 @@ import Bookings from './Pages/Bookings'
 import AddBooking from './Pages/addBooking'
 import EditBooking from './Pages/editBooking'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from './Pages/Home'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Router>
         <NavBar />
         <Routes>
+          <Route path='/home' exact element = {<Home/>}></Route>
           <Route path="/register" exact element={<Register />} />
           <Route path="/" exact element={<Login />} />
           <Route path="/mybookings" exact element={<Bookings />} />
